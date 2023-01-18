@@ -14,15 +14,8 @@ export default function Home() {
 
   useEffect(() => {
     const importAll = (r) =>  r.keys().map(r)
-    setImages(importAll(require.context('../public/shrek/', false, /\.(png|jpe?g|svg)$/)))
+    setImages(importAll(require.context('./public/shrek/', false, /\.(png|jpe?g|svg)$/)))
   }, [])
-
-  // useEffect(() => {
-  //   const main = document.querySelector('main')
-  //   main.style.paddingTop = ((window.innerHeight - document.querySelector("img")?.offsetHeight) / 2) + 'px'
-  //   main.style.gap = ((window.innerHeight - document.querySelector("img")?.offsetHeight) / 2) + 'px'
-  //   main.style.paddingBottom = ((window.innerHeight - document.querySelector("img")?.offsetHeight) / 2) + 'px'
-  // }, [images])
 
   useEffect(() => {
     const pxToNum = (px) => Number(px.split('px')[0])
@@ -72,7 +65,7 @@ export default function Home() {
 
     setFrameInterval(setInterval(() => {
       setCounter(counterRef.current + 1)
-    }, 200))
+    }, 50))
 
     setIsPlaying(true)
   }
@@ -115,7 +108,7 @@ export default function Home() {
           </button>
           <input className={styles.slider} min="0" max={images.length} value={counter} onChange={handleSlider} type="range"></input>
         </div>
-        {images.sort((a, b) => toNum(a) - toNum(b)).map((image, i) => <Image style={{
+        {images.sort((a, b) => toNum(a) - toNum(b)).map((image, i) => <Image priority style={{
           pointerEvents: "none"
         }} key={i} src={image} width="1280" height="720" alt="shrek image"/>)}
       </main>
