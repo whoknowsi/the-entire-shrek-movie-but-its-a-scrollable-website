@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const importAll = (r) =>  r.keys().map(r)
-    setImages(importAll(require.context('./public/shrek/', false, /\.(png|jpe?g|svg)$/)))
+    setImages(importAll(require.context('/public/shrek/', false, /\.(png|jpe?g|svg)$/)))
   }, [])
 
   useEffect(() => {
