@@ -10,6 +10,8 @@ export default function Home() {
   const [frameInterval, setFrameInterval] = useState(null)
   const [hideTimeOut, setHideTimeOut] = useState(false)
   const [counter, setCounter] = useState(1)
+  const [isBeingDragged, setIsBeingDragged] = useState(false)
+  const prevTouch = useRef(null)
   const counterRef = useRef(1)
 
   useEffect(() => {
@@ -21,10 +23,23 @@ export default function Home() {
     const pxToNum = (px) => Number(px.split('px')[0])
 
     const handleEvent = (e) => {
+      if(e.type === "touchmove") {
+        if(isBeingDragged) {
+          return
+        } else {
+          e.preventDefault()
+          return
+        }
+      }
+
       e.preventDefault()
-      e.deltaY > 0 
+      e.deltaY && e.deltaY > 0 
         ? setCounter(counter + 1)
         : setCounter(counter - 1)
+    }
+
+    const handleTouchEnd = () => {
+      setIsBeingDragged(false)
     }
 
     const main = document.querySelector('main')
@@ -38,13 +53,14 @@ export default function Home() {
     main.addEventListener('scroll', handleEvent, false)
     main.addEventListener('mousewheel', handleEvent, false)
     main.addEventListener('touchmove', handleEvent, false)
+    main.addEventListener('touchend', handleTouchEnd, false)
   
     return () => {
       main.removeEventListener('scroll', handleEvent, false)
       main.removeEventListener('mousewheel', handleEvent, false)
       main.removeEventListener('touchmove', handleEvent, false)
     }
-  }, [counter])
+  }, [counter, isBeingDragged])
 
   useEffect(() => {
     const handleMouseMove = () => {
@@ -84,6 +100,7 @@ export default function Home() {
   const toNum = (x) =>  Number(x.default.src.split('out')[1].split('.')[0])
 
   const handleSlider = ({ target }) => {
+    setIsBeingDragged(true)
     setCounter(Number(target.value))
   }
 
