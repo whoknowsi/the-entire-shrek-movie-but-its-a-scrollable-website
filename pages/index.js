@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/index.module.css'
-import { useState, useEffect, useRef, use } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FaPlay, FaPause } from 'react-icons/fa'
 
 export default function Home() {
@@ -11,7 +11,6 @@ export default function Home() {
   const [hideTimeOut, setHideTimeOut] = useState(false)
   const [counter, setCounter] = useState(1)
   const [isBeingDragged, setIsBeingDragged] = useState(false)
-  const prevTouch = useRef(null)
   const counterRef = useRef(1)
 
   useEffect(() => {
